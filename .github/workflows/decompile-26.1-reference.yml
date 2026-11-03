@@ -1,4 +1,4 @@
-name: Decompile upstream Minecraft 26.1 reference
+name: Extract upstream Minecraft 26.1 source
 
 on:
   pull_request:
@@ -7,13 +7,19 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   decompile-reference:
-    name: Extract upstream 26.1 reference sources
+    name: Extract upstream 26.1 source
     runs-on: ubuntu-latest
     steps:
+      - name: Check out the PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+          persist-credentials: true
+
       - name: Set up Java 25
         uses: actions/setup-java@v4
         with:
@@ -29,11 +35,12 @@ jobs:
             --output /tmp/spotify_craft_26.1.jar
           echo "13e95d2690aa0de9e5082a4feb773622a49b640639e6732e9665232d136dfca8  /tmp/spotify_craft_26.1.jar" \
             | sha256sum --check
-          mkdir -p reference/resources reference/classes
+          mkdir -p reference/resources
           unzip -q /tmp/spotify_craft_26.1.jar -d reference/resources
           echo "Upstream JAR entries: $(jar tf /tmp/spotify_craft_26.1.jar | wc -l)"
-          echo "Mod metadata:"
-          cat reference/resources/fabric.mod.json
+          echo "Build metadata:"
+          grep -E '^Fabric-(Gradle|Loom|Minecraft|Loader)-Version:' \
+            reference/resources/META-INF/MANIFEST.MF
 
       - name: Decompile Minecraft 26.1 mod classes
         shell: bash
@@ -47,18 +54,40 @@ jobs:
             --comments false \
             --silent true
           test -d reference/sources
-          find reference/sources -type f -name '*.java' | sort > reference/java-files.txt
-          echo "Decompiled Java files: $(wc -l < reference/java-files.txt)"
-          sed -n '1,80p' reference/java-files.txt
+          echo "Decompiled Java files: $(find reference/sources -type f -name '*.java' | wc -l)"
+
+      - name: Add 26.1 source and resources to the PR branch
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p versions/26.1/src/main/java versions/26.1/src/main/resources
+          cp -a reference/sources/. versions/26.1/src/main/java/
+          cp -a reference/resources/. versions/26.1/src/main/resources/
+          find versions/26.1/src/main/resources -type f -name '*.class' -delete
+          rm -f versions/26.1/src/main/resources/META-INF/MANIFEST.MF
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add versions/26.1/src/main/java versions/26.1/src/main/resources
+          if git diff --cached --quiet; then
+            echo "26.1 source already extracted."
+            exit 0
+          fi
+          git commit -m "chore: add decompiled Minecraft 26.1 source baseline"
+          git push origin "HEAD:${GITHUB_HEAD_REF}"
 
       - name: Package temporary reference
+        if: always()
         run: |
-          zip -qr /tmp/spotifycraft-26.1-reference.zip reference
+          if [ -d reference ]; then
+            zip -qr /tmp/spotifycraft-26.1-reference.zip reference
+          fi
 
-      - name: Upload decompiled reference for the port
+      - name: Upload decompiled reference for diagnostics
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: spotifycraft-26.1-reference-sources
           path: /tmp/spotifycraft-26.1-reference.zip
-          if-no-files-found: error
+          if-no-files-found: ignore
           retention-days: 7
