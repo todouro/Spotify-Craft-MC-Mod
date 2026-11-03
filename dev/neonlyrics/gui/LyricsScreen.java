@@ -191,7 +191,7 @@ extends class_437 {
         this.idBox.method_1868(-1118479);
         this.idBox.method_1852(LyricsScreen.c().spotifyClientId);
         this.idBox.method_47404((class_2561)class_2561.method_43470((String)LyricsScreen.t("hint.clientid", new Object[0])).method_27692(class_124.field_1063));
-        this.method_37063((class_364)this.idBox);
+        this.method_37063(this.idBox);
         LyricsScreen.show(this.idBox, false);
     }
 
@@ -1450,10 +1450,8 @@ extends class_437 {
             int startX = this.vx + this.vw - 17 - (n - 1) * step;
             this.labels(y, h, title, null, startX - this.vx - 24);
             for (int i = 0; i < n; ++i) {
-                int col;
-                boolean isAuto;
-                boolean bl = isAuto = auto && i == 0;
-                int n2 = isAuto ? 0 : (col = cols[i - (auto ? 1 : 0)]);
+                boolean isAuto = auto && i == 0;
+                int col = isAuto ? 0 : cols[i - (auto ? 1 : 0)];
                 boolean sel = isAuto ? value < 0 : value == col;
                 float cx = startX + i * step;
                 float sv = this.pool.to(id + "s" + i, sel ? 1.0 : 0.0);
@@ -1706,12 +1704,14 @@ extends class_437 {
         int h = 38;
         int y = this.rowStart(h);
         if (y != Integer.MIN_VALUE) {
-            boolean bad;
-            boolean ok;
             this.rowBg(y, h, "status");
             NowPlaying np = SpotifyClient.now();
-            boolean bl = c.demoLyrics || (SpotifyClient.autoMode() ? LocalMedia.status() == LocalMedia.Status.PLAYING : SpotifyClient.status() == SpotifyClient.Status.CONNECTED) ? true : (ok = false);
-            boolean bl2 = SpotifyClient.autoMode() ? LocalMedia.status() == LocalMedia.Status.FAILED || LocalMedia.status() == LocalMedia.Status.UNSUPPORTED : (bad = SpotifyClient.status() == SpotifyClient.Status.ERROR);
+            boolean ok = c.demoLyrics || (SpotifyClient.autoMode()
+                ? LocalMedia.status() == LocalMedia.Status.PLAYING
+                : SpotifyClient.status() == SpotifyClient.Status.CONNECTED);
+            boolean bad = SpotifyClient.autoMode()
+                ? LocalMedia.status() == LocalMedia.Status.FAILED || LocalMedia.status() == LocalMedia.Status.UNSUPPORTED
+                : SpotifyClient.status() == SpotifyClient.Status.ERROR;
             int col = ok ? 6022299 : (bad ? 16735354 : 16762460);
             float pulse = ok ? 0.5f + 0.5f * Anim.pulse(1600.0) : 1.0f;
             Gfx.aaCircle(this.gfx, this.vx + this.vw - 20, (float)y + (float)h / 2.0f, 7.0f, col, 0.15f * pulse);
@@ -1823,11 +1823,11 @@ extends class_437 {
     }
 
     private class_2561 comp(String s, T t) {
-        Map m = this.comps.computeIfAbsent(t, k -> new HashMap());
+        Map<String, class_2561> m = this.comps.computeIfAbsent(t, k -> new HashMap<>());
         if (m.size() > 600) {
             m.clear();
         }
-        return m.computeIfAbsent(s, k -> class_2561.method_43470((String)k).method_27696(class_2583.field_24360.method_27704(FONTS.get((Object)t))));
+        return m.computeIfAbsent(s, k -> class_2561.method_43470(k).method_27696(class_2583.field_24360.method_27704(FONTS.get(t))));
     }
 
     private int tw(String s, T t) {

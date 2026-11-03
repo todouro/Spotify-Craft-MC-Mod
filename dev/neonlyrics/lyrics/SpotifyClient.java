@@ -25,7 +25,6 @@ import dev.neonlyrics.lyrics.NowPlaying;
 import dev.neonlyrics.sky.SkyPreset;
 import dev.neonlyrics.util.Fx;
 import java.io.OutputStream;
-import java.lang.invoke.CallSite;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -485,21 +484,21 @@ public final class SpotifyClient {
                 if (System.currentTimeMillis() > SpotifyClient.tokens.expiresAt && !SpotifyClient.refresh()) {
                     return;
                 }
-                Map<String, CallSite> h = Map.of("Authorization", "Bearer " + SpotifyClient.tokens.access);
+                Map<String, String> h = Map.of("Authorization", "Bearer " + SpotifyClient.tokens.access);
                 switch (cmd.ordinal()) {
                     default: {
                         throw new MatchException(null, null);
                     }
                     case 0: {
-                        Http.Response response = Http.empty("POST", "https://api.spotify.com/v1/me/player/next", h);
+                        r = Http.empty("POST", "https://api.spotify.com/v1/me/player/next", h);
                         break;
                     }
                     case 1: {
-                        Http.Response response = Http.empty("POST", "https://api.spotify.com/v1/me/player/previous", h);
+                        r = Http.empty("POST", "https://api.spotify.com/v1/me/player/previous", h);
                         break;
                     }
                     case 2: {
-                        Http.Response response = r = Http.empty("PUT", "https://api.spotify.com/v1/me/player/" + (SpotifyClient.now.playing ? "pause" : "play"), h);
+                        r = Http.empty("PUT", "https://api.spotify.com/v1/me/player/" + (SpotifyClient.now.playing ? "pause" : "play"), h);
                     }
                 }
                 if (r.code() == 401 || r.code() == 403) {
