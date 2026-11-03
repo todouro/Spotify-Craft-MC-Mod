@@ -17,7 +17,7 @@ public abstract class EntityRendererMixin {
     @Inject(method={"shouldRender"}, at={@At(value="HEAD")}, cancellable=true, require=0)
     private void neonlyrics$hideForDeathFx(Entity entity, Frustum frustum, double x, double y, double z, CallbackInfoReturnable<Boolean> cir) {
         if (DeathFx.hides(entity)) {
-            cir.setReturnValue((Object)false);
+            cir.setReturnValue(false);
         }
     }
 }
