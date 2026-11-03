@@ -60,7 +60,7 @@ public final class Island {
         }
         Minecraft mc = Minecraft.getInstance();
         Config c = NeonLyrics.cfg();
-        if (mc.options.hideGui || mc.player == null || !c.spotifyHudEnabled) {
+        if (mc.options.hideGui || mc.player == null || !c.islandEnabled) {
             return;
         }
         if (mc.screen instanceof LyricsScreen) {
