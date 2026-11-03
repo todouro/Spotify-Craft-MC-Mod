@@ -111,7 +111,7 @@ public final class SkyRenderer {
         Config c = NeonLyrics.cfg();
         if (c.sky != lastSky) {
             if (lastSky != -99 && mc.player != null) {
-                p = c.customSkyboxEnabled ? SkyPreset.get(c.sky) : null;
+                p = SkyPreset.get(c.sky);
                 Island.notify(p == null ? Fx.t("neonlyrics.sky.off", new Object[0]) : Fx.t("neonlyrics.sky.enabled", Fx.t(p.key(), new Object[0])), p != null);
             }
             lastSky = c.sky;
@@ -121,7 +121,7 @@ public final class SkyRenderer {
             return;
         }
         SkyRenderer.updateClouds(mc, c);
-        p = c.customSkyboxEnabled ? SkyPreset.get(c.sky) : null;
+        p = SkyPreset.get(c.sky);
         boolean bl = wantRain = p != null && c.realWeather && (p.weather == SkyPreset.Weather.RAIN || p.weather == SkyPreset.Weather.THUNDER) && mc.level.dimension() == Level.OVERWORLD;
         if (wantRain) {
             mc.level.setRainLevel(1.0f);
@@ -135,7 +135,7 @@ public final class SkyRenderer {
     }
 
     private static void updateClouds(Minecraft mc, Config c) {
-        boolean hide = c.customSkyboxEnabled && c.hideClouds && c.sky >= 0;
+        boolean hide = c.hideClouds && c.sky >= 0;
         OptionInstance opt = mc.options.cloudStatus();
         if (hide && opt.get() != CloudStatus.OFF) {
             c.cloudsBefore = ((CloudStatus)opt.get()).name();
@@ -154,7 +154,7 @@ public final class SkyRenderer {
     }
 
     public static void render(GuiGraphicsExtractor g, DeltaTracker delta) {
-        if (!License.ok() || !NeonLyrics.cfg().customSkyboxEnabled) {
+        if (!License.ok()) {
             return;
         }
         Minecraft mc = Minecraft.getInstance();
@@ -167,7 +167,7 @@ public final class SkyRenderer {
         lastNanos = nowNs;
         float pt = delta.getGameTimeDeltaPartialTick(false);
         SkyRenderer.setupCamera(g, mc, pt);
-        SkyPreset p = c.customSkyboxEnabled ? SkyPreset.get(c.sky) : null;
+        SkyPreset p = SkyPreset.get(c.sky);
         float old = Gfx.alpha;
         Gfx.alpha = 1.0f;
         if (p != null && p.weather == SkyPreset.Weather.THUNDER && mc.level.dimension() == Level.OVERWORLD) {
