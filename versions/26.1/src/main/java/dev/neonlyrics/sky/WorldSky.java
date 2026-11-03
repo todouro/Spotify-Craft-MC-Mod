@@ -177,8 +177,8 @@ public final class WorldSky {
     }
 
     private static void renderSky(LevelRenderContext ctx) {
-        int lyricCol;
         long tod;
+        int lyricCol;
         fogMix = 0.0f;
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.level == null) {
@@ -270,7 +270,7 @@ public final class WorldSky {
                 WorldSky.drawWeather(ts, p.weather, c.weatherAmount * (AutoPerf.allow(3) ? 1.0f : 0.5f), out, dt, t, cam);
             }
         }
-        int n = c.lyricsColor >= 0 ? LYRIC_COLORS[Math.floorMod(c.lyricsColor, LYRIC_COLORS.length)] : (lyricCol = p == null ? Theme.accent() : p.lyricColor);
+        lyricCol = c.lyricsColor >= 0 ? LYRIC_COLORS[Math.floorMod(c.lyricsColor, LYRIC_COLORS.length)] : (p == null ? Theme.accent() : p.lyricColor);
         if (c.lyricsSky && c.lyricsStyle == 0) {
             WorldSky.drawLyrics(mc, c, buffers, lyricCol, dt);
         }
@@ -1015,7 +1015,7 @@ public final class WorldSky {
         if (alpha <= 0.01f) {
             return;
         }
-        double d2 = WorldSky.q() == 0 || !AutoPerf.allow(3) ? 2.0 : (step = WorldSky.q() == 1 ? 1.25 : 1.0);
+        step = WorldSky.q() == 0 || !AutoPerf.allow(3) ? 2.0 : (WorldSky.q() == 1 ? 1.25 : 1.0);
         if (meshVer != SkyTextures.version() || step != meshStep || mX == null) {
             WorldSky.buildMesh(step);
         }
@@ -1150,7 +1150,7 @@ public final class WorldSky {
         if (alpha <= 0.01f) {
             return;
         }
-        double d = WorldSky.q() == 0 || !AutoPerf.allow(3) ? 3.0 : (step = WorldSky.q() == 1 ? 2.0 : 1.5);
+        step = WorldSky.q() == 0 || !AutoPerf.allow(3) ? 3.0 : (WorldSky.q() == 1 ? 2.0 : 1.5);
         if (lX == null || step != liveStep) {
             WorldSky.buildLive(step);
         }
@@ -1166,7 +1166,7 @@ public final class WorldSky {
         double halfDiag = Math.toDegrees(Math.atan(Math.tan(Math.toRadians(fov / 2.0)) * Math.sqrt(1.0 + aspect * aspect)));
         double cosLim = Math.cos(Math.toRadians(Math.min(95.0, halfDiag + 4.0 + step)));
         double d2 = skyD;
-        int n = WorldSky.q() >= 2 ? 14000 : (budget = WorldSky.q() == 1 ? 7000 : 3000);
+        budget = WorldSky.q() >= 2 ? 14000 : (WorldSky.q() == 1 ? 7000 : 3000);
         if (!AutoPerf.allow(5)) {
             budget = 0;
         }
@@ -1189,10 +1189,9 @@ public final class WorldSky {
                 int c11 = WorldSky.liveCol(i11, bright);
                 int c01 = WorldSky.liveCol(i01, bright);
                 if (budget > 0) {
-                    int n2;
                     float lo = Math.min(Math.min(WorldSky.lum(c00), WorldSky.lum(c10)), Math.min(WorldSky.lum(c01), WorldSky.lum(c11)));
                     float hi = Math.max(Math.max(WorldSky.lum(c00), WorldSky.lum(c10)), Math.max(WorldSky.lum(c01), WorldSky.lum(c11)));
-                    int n3 = hi - lo > 0.3f ? 3 : (n2 = hi - lo > 0.1f ? 2 : 1);
+                    int n2 = hi - lo > 0.3f ? 3 : (hi - lo > 0.1f ? 2 : 1);
                     if (n2 > 1) {
                         budget -= (n2 + 1) * (n2 + 1) - 4;
                         WorldSky.liveSub(ai, ei, n2, c00, c10, c11, c01, alpha, bright, d2);
@@ -1790,7 +1789,7 @@ public final class WorldSky {
             }
             double gap = (double)space * 2.4 * degPerPx;
             int n = this.chunks.size();
-            int n2 = n <= 2 ? 1 : (rowsN = n >= 6 && RND.nextFloat() < 0.35f ? 3 : 2);
+            int rowsN = n <= 2 ? 1 : (n >= 6 && RND.nextFloat() < 0.35f ? 3 : 2);
             if (n == 3 && RND.nextFloat() < 0.35f) {
                 rowsN = 1;
             }
