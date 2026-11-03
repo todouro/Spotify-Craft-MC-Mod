@@ -8,7 +8,7 @@
 
 Spotify Craft brings your currently playing music into Minecraft with animated, 3D lyrics that appear in the sky and stay in sync with your song. Enjoy a now-playing display, album artwork, visualisers, custom skies, cosmetics, and a glass-style hotbar.
 
-The current source for this github is only for 1 jar (1.21.11), so when you build it it will only be compatible with 1.21.11!
+This fork maintains separate source and build projects for Minecraft 1.21.11 (Java 21) and Minecraft 26.1 (Java 25). Each version produces its own compatible JAR; do not use one version's JAR on the other Minecraft version.
 
 > **Free and open source:**  
 
@@ -43,18 +43,13 @@ Choose the download that matches your Minecraft version.
 
 | Minecraft version | Download | Required Java |
 | --- | --- | --- |
-| 1.21.11 | [Spotify_Craft_1.21.11_fixed.jar](https://github.com/CapitalistEnemy1/Spotify-Craft-/releases/download/4.0.0/Spotify_Craft_1.21.11.jar) | Java 21 or newer |
-| 26.1 | [Spotify_Craft_26.1_fixed.jar](https://github.com/CapitalistEnemy1/Spotify-Craft-/releases/download/4.0.0/Spotify_Craft_26.1.jar) | Java 25 or newer |
-| 26.1.1 | [Spotify_Craft_26.1.1_fixed.jar](https://github.com/CapitalistEnemy1/Spotify-Craft-/releases/download/4.0.0/Spotify_Craft_26.1.1.jar) | Java 25 or newer |
-| 26.1.2 | [Spotify_Craft_26.1.2_fixed.jar](https://github.com/CapitalistEnemy1/Spotify-Craft-/releases/download/4.0.0/Spotify_Craft_26.1.2.jar) | Java 25 or newer |
-| 26.2 | [Spotify_Craft_26.2_fixed.jar](https://github.com/CapitalistEnemy1/Spotify-Craft-/releases/download/4.0.0/Spotify_Craft_26.2.jar) | Java 25 or newer |
-| 26.3 | [Spotify_Craft_26.3_fixed.jar](https://github.com/CapitalistEnemy1/Spotify-Craft-/releases/download/4.0.0/Spotify_Craft_26.3.jar) | Java 25 or newer |
+| 1.21.11 | [spotifycraft-2.1.1+mc1.21.11.jar](https://github.com/todouro/Spotify-Craft-MC-Mod/releases/download/v2.1.1/spotifycraft-2.1.1%2Bmc1.21.11.jar) | Java 21 or newer |
+| 26.1 | [spotifycraft-26.1-2.1.1+mc26.1.jar](https://github.com/todouro/Spotify-Craft-MC-Mod/releases/download/v2.1.1/spotifycraft-26.1-2.1.1%2Bmc26.1.jar) | Java 25 or newer |
 
-**[Browse all releases](https://github.com/CapitalistEnemy1/Spotify-Craft-/releases/tag/4.0.0)**
-
+**[Browse all releases](https://github.com/todouro/Spotify-Craft-MC-Mod/releases)**
 ## Installation
 
-1. Install [Fabric Loader](https://fabricmc.net/use/) version **0.18.0 or newer** for your Minecraft version.
+1. Install [Fabric Loader](https://fabricmc.net/use/) version **0.18.0 or newer** for Minecraft 1.21.11, or **0.20.1 or newer** for Minecraft 26.1.
 2. Download the matching [Fabric API](https://modrinth.com/mod/fabric-api) version.
 3. Place the Fabric API `.jar` file in your Minecraft `mods` folder.
 4. Download the Spotify Craft `.jar` for your Minecraft version from the [releases page](https://github.com/CapitalistEnemy1/Spotify-Craft-/releases/tag/1.0.0).
@@ -115,8 +110,8 @@ This project states that it is distributed under the **MIT Licence**. See the re
 
 The MIT Licence generally permits use, modification, and redistribution, subject to its conditions, including preservation of the copyright and permission notice. Make sure the licence file and notices required by the licence are included when redistributing the project.
 
-- [Main project repository](https://github.com/CapitalistEnemy1/Spotify-Craft-)
-- [Source/build repository](https://github.com/CapitalistEnemy1/Spotify-Craft-MC-Mod)
+- [Upstream project repository](https://github.com/CapitalistEnemy1/Spotify-Craft-)
+- [This fork's source/build repository](https://github.com/todouro/Spotify-Craft-MC-Mod)
 - [MIT Licence details](https://opensource.org/license/mit)
 
 ## Disclaimer
