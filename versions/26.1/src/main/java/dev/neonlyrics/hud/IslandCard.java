@@ -98,7 +98,8 @@ final class IslandCard {
      * WARNING - Removed try catching itself - possible behaviour change.
      */
     private static void draw(GuiGraphicsExtractor guiGraphicsExtractor, Minecraft minecraft, Config config, NowPlaying nowPlaying, long l) {
-        Object object;
+        String object;
+        float var45_43;
         boolean bl;
         int n;
         long l2 = System.nanoTime();
