@@ -77,8 +77,8 @@ public final class Island {
 
     static void renderIslandOld(GuiGraphicsExtractor g, Minecraft mc, Config c) {
         float targetW;
-        Object key;
-        Object text;
+        String key;
+        String text;
         Kind kind;
         boolean hasLine;
         long nowNs = System.nanoTime();
