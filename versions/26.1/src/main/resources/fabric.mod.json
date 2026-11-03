@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "neonlyrics",
-  "version": "2.1.0+mc26.1",
+  "version": "2.1.1+mc26.1",
   "name": "SpotifyCraft",
   "description": "Spotify-Lyrics in 3D im Himmel, 15 Himmel mit Wetter, Leiste oben und Glas-Hotbar. Client-only.",
   "authors": [
