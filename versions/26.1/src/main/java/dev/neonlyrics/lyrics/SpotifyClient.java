@@ -478,17 +478,17 @@ public final class SpotifyClient {
                 if (System.currentTimeMillis() > SpotifyClient.tokens.expiresAt && !SpotifyClient.refresh()) {
                     return;
                 }
-                Map<String, CallSite> h = Map.of("Authorization", "Bearer " + SpotifyClient.tokens.access);
+                Map<String, String> h = Map.of("Authorization", "Bearer " + SpotifyClient.tokens.access);
                 switch (cmd.ordinal()) {
                     default: {
                         throw new MatchException(null, null);
                     }
                     case 0: {
-                        Http.Response response = Http.empty("POST", "https://api.spotify.com/v1/me/player/next", h);
+                        r = Http.empty("POST", "https://api.spotify.com/v1/me/player/next", h);
                         break;
                     }
                     case 1: {
-                        Http.Response response = Http.empty("POST", "https://api.spotify.com/v1/me/player/previous", h);
+                        r = Http.empty("POST", "https://api.spotify.com/v1/me/player/previous", h);
                         break;
                     }
                     case 2: {
