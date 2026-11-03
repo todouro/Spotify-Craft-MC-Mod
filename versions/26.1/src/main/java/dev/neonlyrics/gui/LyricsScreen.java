@@ -169,7 +169,7 @@ extends Screen {
         this.idBox.setTextColor(-1118479);
         this.idBox.setValue(LyricsScreen.c().spotifyClientId);
         this.idBox.setHint((Component)Component.literal((String)LyricsScreen.t("hint.clientid", new Object[0])).withStyle(ChatFormatting.DARK_GRAY));
-        this.addRenderableWidget((GuiEventListener)this.idBox);
+        this.addRenderableWidget(this.idBox);
         LyricsScreen.show(this.idBox, false);
     }
 
@@ -1032,7 +1032,7 @@ extends Screen {
             c.lyricsIsland = v;
         });
         this.toggleRow("islb", "Big top bar", "Use the original full-size layout", c.islandBig, bl -> {
-            config.islandBig = bl;
+            c.islandBig = bl;
         });
         this.toggleRow("cov", LyricsScreen.t("extras.cover", new Object[0]), LyricsScreen.t("ui.display.cover.sub", new Object[0]), c.albumCover, v -> {
             c.albumCover = v;
@@ -1804,11 +1804,11 @@ extends Screen {
     }
 
     private Component comp(String s, T t) {
-        Map m = this.comps.computeIfAbsent(t, k -> new HashMap());
+        Map<String, Component> m = this.comps.computeIfAbsent(t, k -> new HashMap<String, Component>());
         if (m.size() > 600) {
             m.clear();
         }
-        return m.computeIfAbsent(s, k -> Component.literal((String)k).withStyle(Style.EMPTY.withFont(FONTS.get((Object)t))));
+        return m.computeIfAbsent(s, k -> Component.literal(k).withStyle(Style.EMPTY.withFont(FONTS.get(t))));
     }
 
     private int tw(String s, T t) {
@@ -1816,11 +1816,11 @@ extends Screen {
         if (s == null || s.isEmpty()) {
             return 0;
         }
-        Map m = this.widths.computeIfAbsent(t, k -> new HashMap());
+        Map<String, Integer> m = this.widths.computeIfAbsent(t, k -> new HashMap<String, Integer>());
         if (m.size() > 600) {
             m.clear();
         }
-        if ((v = (Integer)m.get(s)) == null) {
+        if ((v = m.get(s)) == null) {
             v = this.font.width((FormattedText)this.comp(s, t));
             m.put(s, v);
         }
