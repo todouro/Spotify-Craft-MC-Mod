@@ -1,0 +1,37 @@
+plugins {
+    id 'net.fabricmc.fabric-loom' version '1.19.3'
+}
+
+group = 'dev.neonlyrics'
+version = '2.1.0+mc26.1'
+
+base {
+    archivesName = 'spotifycraft-26.1'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url = 'https://maven.fabricmc.net/'
+    }
+}
+
+dependencies {
+    minecraft 'com.mojang:minecraft:26.1'
+    implementation 'net.fabricmc:fabric-loader:0.19.5'
+    implementation 'net.fabricmc.fabric-api:fabric-api:0.145.1+26.1'
+}
+
+loom {
+    accessWidenerPath = file('src/main/resources/neonlyrics.accesswidener')
+    mods {
+        neonlyrics {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 25
+    options.encoding = 'UTF-8'
+}
