@@ -1789,7 +1789,7 @@ public final class WorldSky {
             }
             double gap = (double)space * 2.4 * degPerPx;
             int n = this.chunks.size();
-            int rowsN = n <= 2 ? 1 : (n >= 6 && RND.nextFloat() < 0.35f ? 3 : 2);
+            rowsN = n <= 2 ? 1 : (n >= 6 && RND.nextFloat() < 0.35f ? 3 : 2);
             if (n == 3 && RND.nextFloat() < 0.35f) {
                 rowsN = 1;
             }
