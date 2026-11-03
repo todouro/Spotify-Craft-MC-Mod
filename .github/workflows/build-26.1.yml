@@ -6,12 +6,6 @@ on:
     paths:
       - "versions/26.1/**"
       - ".github/workflows/build-26.1.yml"
-  push:
-    branches:
-      - "port/minecraft-26.1"
-    paths:
-      - "versions/26.1/**"
-      - ".github/workflows/build-26.1.yml"
   workflow_dispatch:
 
 permissions:
